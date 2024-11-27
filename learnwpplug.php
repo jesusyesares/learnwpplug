@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: Books Custom Post Type
+ * Plugin Name: Courses Custom Post Type
  * Plugin URI:
- * Description: A plugin to create a custom post type for books.
- * Version: 1.0
- * Text Domain: lwp-books
+ * Description: A plugin to create a custom post type for students.
+ * Version: 0.1.0
+ * Text Domain: jyg-students
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,10 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Let's create a custom post type for books and a custom taxonomy for the book genre.
- * We will also create a subscribe form on the single book page to allow users to subscribe to the book.
+ * Let's create a custom post type for courses and a custom taxonomy for the subject.
+ * We will also create a subscribe form on the single course page to allow users to subscribe to the course.
  * The form data will be saved as a custom post type for subscribers.
- * We will display the number of subscribers per book in the admin column.
+ * We will display the number of subscribers per course in the admin column.
  *
  *
  * Here are the WordPress action and filter hooks used in this example:
@@ -23,67 +23,67 @@ if ( ! defined( 'ABSPATH' ) ) {
  * ### Action Hooks
  * - init
  * callbacks:
- *      book_post_type
- *      book_taxonomy
- *      save_book_subscribe_form_data
+ *      course_post_type
+ *      course_taxonomy
+ *      save_course_subscribe_form_data
  *      subscribers_cpt
- *      manage_book_posts_custom_column
- *      book_subscribe_column_content
- *      manage_book_posts_columns
- *      book_subscribe_column
+ *      manage_course_posts_custom_column
+ *      course_subscribe_column_content
+ *      manage_course_posts_columns
+ *      course_subscribe_column
  *
  * ### Filter Hooks
- * - manage_book_posts_columns
+ * - manage_course_posts_columns
  * callback:
- *       book_subscribe_column
+ *       course_subscribe_column
  */
 
 /**
- * Register the book custom post type.
+ * Register the course custom post type.
  * show_in_rest is set to true to enable the Gutenberg editor for the custom post type.
  * supports custom-fields to enable custom fields in the Gutenberg editor.
- * rewrite is set to 'books' to change the URL of the custom post type.
- * public is set to true to access the books content from the front end.
+ * rewrite is set to 'courses' to change the URL of the custom post type.
+ * public is set to true to access the courses content from the front end.
  */
-add_action('init', 'book_post_type');
-function book_post_type() {
-    register_post_type('book',
+add_action('init', 'course_post_type');
+function course_post_type() {
+    register_post_type('course',
         array(
             'labels'      => array(
-                'name'          => __('Books', 'lwp-books'),
-                'singular_name' => __('Book', 'lwp-books'),
-                'add_new'       => __('Add New Book', 'lwp-books'),
-                'add_new_item'       => __('Add New Book', 'lwp-books'),
-                'new_item'       => __('New Book', 'lwp-books'),
-                'edit_item'       => __('Edit Book', 'lwp-books'),
-                'view_item'       => __('View Book', 'lwp-books'),
-                'all_items'       => __('All Books', 'lwp-books'),
+                'name'          => __('Courses', 'jyg-students'),
+                'singular_name' => __('Course', 'jyg-students'),
+                'add_new'       => __('Add New Course', 'jyg-students'),
+                'add_new_item'       => __('Add New Course', 'jyg-students'),
+                'new_item'       => __('New Course', 'jyg-students'),
+                'edit_item'       => __('Edit Course', 'jyg-students'),
+                'view_item'       => __('View Course', 'jyg-students'),
+                'all_items'       => __('All Courses', 'jyg-students'),
             ),
             'public'      => true,
             'has_archive' => true,
             'show_in_rest' => true,
             'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields' ),
-            'rewrite'     => array( 'slug' => 'books' ),
+            'rewrite'     => array( 'slug' => 'courses' ),
 
         )
     );
 }
 
 /**
- * Register the book_genre taxonomy for the book custom post type.
+ * Register the subject taxonomy for the course custom post type.
  * show_in_rest is set to true to enable the Gutenberg editor for the custom taxonomy.
  * hierarchical is set to true to create a hierarchical taxonomy.
  * show_admin_column is set to true to display the taxonomy in the admin column.
  */
 
-add_action('init', 'book_taxonomy');
-function book_taxonomy() {
+add_action('init', 'course_taxonomy');
+function course_taxonomy() {
     register_taxonomy(
-        'book_genre',
-        'book',
+        'course_subject',
+        'course',
         array(
-            'label' => __('Genre'),
-            'rewrite' => array('slug' => 'genre'),
+            'label' => __('Subject'),
+            'rewrite' => array('slug' => 'subject'),
             'hierarchical' => true,
             'show_admin_column' => true,
             'show_in_rest' => true,
@@ -93,12 +93,12 @@ function book_taxonomy() {
 
 
 /**
- * Add a subscribe form with name and email on the single book page to allow users to submit the form.
- * Use the shortcode [book_subscribe_form] to display the form on the single book page.
- * The form contains name, email, and a hidden field to store the book CPT ID.
+ * Add a subscribe form with name and email on the single course page to allow users to submit the form.
+ * Use the shortcode [course_subscribe_form] to display the form on the single course page.
+ * The form contains name, email, and a hidden field to store the course CPT ID.
  */
-add_shortcode( 'book_subscribe_form', 'book_subscribe_form' );
-function book_subscribe_form() {
+add_shortcode( 'course_subscribe_form', 'course_subscribe_form' );
+function course_subscribe_form() {
     ob_start();
     ?>
     <form action="" method="post">
@@ -106,7 +106,7 @@ function book_subscribe_form() {
         <input type="text" name="name" id="name" required>
         <label for="email">Email:</label>
         <input type="email" name="email" id="email" required>
-        <input type="hidden" name="book_id" value="<?php echo get_the_ID(); ?>">
+        <input type="hidden" name="course_id" value="<?php echo get_the_ID(); ?>">
         <?php wp_nonce_field('subscribe_form', 'subscribe_form_nonce'); ?>
         <input type="submit" value="Subscribe">
     </form>
@@ -119,8 +119,8 @@ function book_subscribe_form() {
  * Check if the form is submitted and the nonce is valid.
  * Sanitize the form data and insert it into the subscriber custom post type.
  */
-add_action('init', 'save_book_subscribe_form_data');
-function save_book_subscribe_form_data() {
+add_action('init', 'save_course_subscribe_form_data');
+function save_course_subscribe_form_data() {
     if (!isset($_POST['subscribe_form_nonce']) || !wp_verify_nonce($_POST['subscribe_form_nonce'], 'subscribe_form')) {
         return;
     }
@@ -128,7 +128,7 @@ function save_book_subscribe_form_data() {
     if (isset($_POST['name']) && isset($_POST['email'])) {
         $name = sanitize_text_field($_POST['name']);
         $email = sanitize_email($_POST['email']);
-        $book_id = intval($_POST['book_id']);
+        $course_id = intval($_POST['course_id']);
         // Save the form data as subscriber post type.
         $subscriber_id = wp_insert_post(array(
             'post_title' => 'New Subscriber ' . $name,
@@ -137,7 +137,7 @@ function save_book_subscribe_form_data() {
             'post_status' => 'publish',
             // add meta data to the subscriber post
             'meta_input' => array(
-                'book_id' => $book_id,
+                'course_id' => $course_id,
                 'name' => $name,
                 'email' => $email,
             )
@@ -162,14 +162,14 @@ function subscribers_cpt(){
     register_post_type('subscriber',
         array(
             'labels'      => array(
-                'name'          => __('Subscribers', 'lwp-books'),
-                'singular_name' => __('Subscriber', 'lwp-books'),
-                'add_new'       => __('Add New Subscriber', 'lwp-books'),
-                'add_new_item'       => __('Add New Subscriber', 'lwp-books'),
-                'new_item'       => __('New Subscriber', 'lwp-books'),
-                'edit_item'       => __('Edit Subscriber', 'lwp-books'),
-                'view_item'       => __('View Subscriber', 'lwp-books'),
-                'all_items'       => __('All Subscribers', 'lwp-books'),
+                'name'          => __('Subscribers', 'jyg-students'),
+                'singular_name' => __('Subscriber', 'jyg-students'),
+                'add_new'       => __('Add New Subscriber', 'jyg-students'),
+                'add_new_item'       => __('Add New Subscriber', 'jyg-students'),
+                'new_item'       => __('New Subscriber', 'jyg-students'),
+                'edit_item'       => __('Edit Subscriber', 'jyg-students'),
+                'view_item'       => __('View Subscriber', 'jyg-students'),
+                'all_items'       => __('All Subscribers', 'jyg-students'),
             ),
             'public'      => true,
             'has_archive' => true,
@@ -182,27 +182,27 @@ function subscribers_cpt(){
 }
 
 /**
- * Show the subscriber entries per book in the admin column.
- * Get the number of subscriber entries per book and display it in the admin column.
+ * Show the subscriber entries per course in the admin column.
+ * Get the number of subscriber entries per course and display it in the admin column.
  */
-add_filter('manage_book_posts_columns', 'book_subscribe_column');
-function book_subscribe_column($columns) {
+add_filter('manage_course_posts_columns', 'course_subscribe_column');
+function course_subscribe_column($columns) {
     $columns['subscribers'] = 'Subscribers';
     return $columns;
 }
 
 /**
- * Display the subscriber entries per book in the admin column.
- * Get the number of subscriber entries per book and display it in the admin column.
+ * Display the subscriber entries per course in the admin column.
+ * Get the number of subscriber entries per course and display it in the admin column.
  */
-add_action('manage_book_posts_custom_column', 'book_subscribe_column_content', 10, 2);
-function book_subscribe_column_content($column, $post_id) {
+add_action('manage_course_posts_custom_column', 'course_subscribe_column_content', 10, 2);
+function course_subscribe_column_content($column, $post_id) {
     if ($column === 'subscribers') {
         $subscribers = get_posts(array(
             'post_type' => 'subscriber',
             'meta_query' => array(
                 array(
-                    'key' => 'book_id',
+                    'key' => 'course_id',
                     'value' => $post_id,
                     'compare' => '=',
                 )
