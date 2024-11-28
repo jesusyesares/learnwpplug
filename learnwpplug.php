@@ -95,7 +95,7 @@ function course_taxonomy() {
 /**
  * Add a subscribe form with name and email on the single course page to allow users to submit the form.
  * Use the shortcode [course_subscribe_form] to display the form on the single course page.
- * The form contains name, email, and a hidden field to store the course CPT ID.
+ * The form contains name, email, address, city, and a hidden field to store the course CPT ID.
  */
 add_shortcode( 'course_subscribe_form', 'course_subscribe_form' );
 function course_subscribe_form() {
@@ -103,9 +103,13 @@ function course_subscribe_form() {
     ?>
     <form action="" method="post">
         <label for="name">Name:</label>
-        <input type="text" name="name" id="name" required>
+        <input type="text" name="name" id="name" required><br>
         <label for="email">Email:</label>
-        <input type="email" name="email" id="email" required>
+        <input type="email" name="email" id="email" required><br>
+        <label for="address">Address:</label>
+        <input type="text" name="address" id="address"><br>
+        <label for="city">City:</label>
+        <input type="text" name="city" id="city"><br>
         <input type="hidden" name="course_id" value="<?php echo get_the_ID(); ?>">
         <?php wp_nonce_field('subscribe_form', 'subscribe_form_nonce'); ?>
         <input type="submit" value="Subscribe">
@@ -125,8 +129,10 @@ function save_course_subscribe_form_data() {
         return;
     }
 
-    if (isset($_POST['name']) && isset($_POST['email'])) {
+    if (isset($_POST['name']) && isset($_POST['address']) && isset($_POST['city']) && isset($_POST['email'])) {
         $name = sanitize_text_field($_POST['name']);
+        $address = sanitize_text_field($_POST['address']);
+        $city = sanitize_text_field($_POST['city']);
         $email = sanitize_email($_POST['email']);
         $course_id = intval($_POST['course_id']);
         // Save the form data as subscriber post type.
@@ -139,6 +145,8 @@ function save_course_subscribe_form_data() {
             'meta_input' => array(
                 'course_id' => $course_id,
                 'name' => $name,
+                'address' => $address,
+                'city' => $city,
                 'email' => $email,
             )
         ));
