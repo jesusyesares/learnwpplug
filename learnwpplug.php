@@ -319,3 +319,29 @@ function student_cpt() {
         )
     );
 }
+
+/**
+ * * Show the student fields in the frontend in each student post.
+ * The student fields are retrieved from the student custom post type.
+ */
+
+add_filter('the_content', 'show_student_fields');
+function show_student_fields($content) {
+    if ( is_singular( 'student' ) ) { // Verifies if the current page is a student post.
+        // Get the student fields from the student custom post type.
+        $student_name = get_post_meta(get_the_ID(), 'name', true);
+        $student_surname = get_post_meta(get_the_ID(), 'surname', true);
+        $student_address = get_post_meta(get_the_ID(), 'address', true);
+        $student_city = get_post_meta(get_the_ID(), 'city', true);
+        $student_email = get_post_meta(get_the_ID(), 'email', true);
+        // Display the student fields in the frontend.
+        $content .= '<p><strong>Name: </strong>' . $student_name . '</p>';
+        $content .= '<p><strong>Surname: </strong>' . $student_surname . '</p>';
+        $content .= '<p><strong>Address: </strong>' . $student_address . '</p>';
+        $content .= '<p><strong>City: </strong>' . $student_city . '</p>';
+        $content .= '<p><strong>Email: </strong>' . $student_email . '</p>';
+    }
+
+    // Return the content with the student fields.
+    return $content;
+}
