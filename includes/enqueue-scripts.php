@@ -34,6 +34,4 @@ function enqueue_leaflet_js_and_css() {
 		));
 	}
 
-	error_log( 'Valor de $student_city: ' . $student_city );
-
 }

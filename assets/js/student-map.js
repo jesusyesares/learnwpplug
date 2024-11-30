@@ -22,8 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 		});
 
-		console.log('Fetching coordinates for:', cityName);
-
 	}   
 
 
