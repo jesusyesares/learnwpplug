@@ -10,7 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  /**
  * * Show the student fields in the frontend in each student post.
  * The student fields are retrieved from the student custom post type.
- * TODO: Review the code for fix the problems rendering the map.
  * ! https://chatgpt.com/g/g-674a0939b10481918ae90db180ff77e4-profesor-desarrollo-wordpress/c/674a0c8d-d450-8001-9f09-b1798c672aaf
  */
 

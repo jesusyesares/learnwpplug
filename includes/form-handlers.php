@@ -52,38 +52,37 @@ function save_course_subscribe_form_data() {
  * Sanitize the form data and insert it into the student custom post type.
  */
 
- add_action('init', 'save_student_form_data');
- function save_student_form_data() {
-	 if (!isset($_POST['student_register_form_nonce']) || !wp_verify_nonce($_POST['student_register_form_nonce'], 'student_register_form')) {
-		 return;
-	 }
- 
-	 if (isset($_POST['student_name']) && isset($_POST['student_surname']) && isset($_POST['student_address']) && isset($_POST['student_city']) && isset($_POST['student_email'])) {
-		 $student_name = sanitize_text_field($_POST['student_name']);
-		 $student_surname = sanitize_text_field($_POST['student_surname']);
-		 $student_address = sanitize_text_field($_POST['student_address']);
-		 $student_city = sanitize_text_field($_POST['student_city']);
-		 $student_email = sanitize_email($_POST['student_email']);
-		 $student_id = intval($_POST['student_id']);
-		 // Save the form data as student post type.
-		 $student_id = wp_insert_post(array(
-			 'post_title' => $student_name . ' ' . $student_surname,
-			 'post_content' => '',
-			 'post_type' => 'student',
-			 'post_status' => 'publish',
-			 // add meta data to the student post
-			 'meta_input' => array(
-				 'student_id' => $student_id,
-				 'name' => $student_name,
-				 'surname' => $student_surname,
-				 'address' => $student_address,
-				 'city' => $student_city,
-				 'email' => $student_email,
-			 )
-		 ));  
-	 }
- 
+add_action('init', 'save_student_form_data');
+function save_student_form_data() {
+	if (!isset($_POST['student_register_form_nonce']) || !wp_verify_nonce($_POST['student_register_form_nonce'], 'student_register_form')) {
+		return;
+	}
+
+	if (isset($_POST['student_name']) && isset($_POST['student_surname']) && isset($_POST['student_address']) && isset($_POST['student_city']) && isset($_POST['student_email'])) {
+		$student_name = sanitize_text_field($_POST['student_name']);
+		$student_surname = sanitize_text_field($_POST['student_surname']);
+		$student_address = sanitize_text_field($_POST['student_address']);
+		$student_city = sanitize_text_field($_POST['student_city']);
+		$student_email = sanitize_email($_POST['student_email']);
+		$student_id = intval($_POST['student_id']);
+		// Save the form data as student post type.
+		$student_id = wp_insert_post(array(
+			'post_title' => $student_name . ' ' . $student_surname,
+			'post_content' => '',
+			'post_type' => 'student',
+			'post_status' => 'publish',
+			// add meta data to the student post
+			'meta_input' => array(
+				'student_id' => $student_id,
+				'name' => $student_name,
+				'surname' => $student_surname,
+				'address' => $student_address,
+				'city' => $student_city,
+				'email' => $student_email,
+			)
+		));  
+	}
+
 	 // Redirect to the same page after form submission.
-	 wp_safe_redirect( esc_url( $_SERVER['REQUEST_URI'] ) );
- }
- 
+	wp_safe_redirect( esc_url( $_SERVER['REQUEST_URI'] ) );
+}

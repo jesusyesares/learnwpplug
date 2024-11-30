@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', function() {
 				throw new Error("There is no results for the city specified.");
 			}
 		});
+
+		console.log('Fetching coordinates for:', cityName);
+
 	}   
 
 

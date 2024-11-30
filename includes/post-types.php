@@ -46,32 +46,32 @@ function learnwpplug_register_course_cpt() {
  * public is set to true to access the subscribers content from the front end.
  */
 
- add_action('init', 'learnwpplug_register_subscribers_cpt');
- // Create a custom post type for subscribers.
- function learnwpplug_register_subscribers_cpt(){
-	 register_post_type('subscriber',
-		 array(
-			 'labels'      => array(
-				 'name'          => __('Subscribers', 'jyg-students'),
-				 'singular_name' => __('Subscriber', 'jyg-students'),
-				 'add_new'       => __('Add New Subscriber', 'jyg-students'),
-				 'add_new_item'       => __('Add New Subscriber', 'jyg-students'),
-				 'new_item'       => __('New Subscriber', 'jyg-students'),
-				 'edit_item'       => __('Edit Subscriber', 'jyg-students'),
-				 'view_item'       => __('View Subscriber', 'jyg-students'),
-				 'all_items'       => __('All Subscribers', 'jyg-students'),
-			 ),
-			 'public'      => true,
-			 'has_archive' => true,
-			 'show_in_rest' => true,
-			 'supports' => array( 'title', 'custom-fields' ),
-			 'rewrite'     => array( 'slug' => 'subscribers' ),
- 
-		 )
-	 );
- }
- 
- /**
+add_action('init', 'learnwpplug_register_subscribers_cpt');
+// Create a custom post type for subscribers.
+function learnwpplug_register_subscribers_cpt(){
+    register_post_type('subscriber',
+        array(
+            'labels'      => array(
+                'name'          => __('Subscribers', 'jyg-students'),
+                'singular_name' => __('Subscriber', 'jyg-students'),
+                'add_new'       => __('Add New Subscriber', 'jyg-students'),
+                'add_new_item'       => __('Add New Subscriber', 'jyg-students'),
+                'new_item'       => __('New Subscriber', 'jyg-students'),
+                'edit_item'       => __('Edit Subscriber', 'jyg-students'),
+                'view_item'       => __('View Subscriber', 'jyg-students'),
+                'all_items'       => __('All Subscribers', 'jyg-students'),
+            ),
+            'public'      => true,
+            'has_archive' => true,
+            'show_in_rest' => true,
+            'supports' => array( 'title', 'custom-fields' ),
+            'rewrite'     => array( 'slug' => 'subscribers' ),
+
+        )
+    );
+}
+
+/**
  * * Register the student custom post type.
  * show_in_rest is set to true to enable the Gutenberg editor for the custom post type.
  * supports custom-fields to enable custom fields in the Gutenberg editor.
