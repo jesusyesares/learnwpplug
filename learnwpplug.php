@@ -3,13 +3,20 @@
  * Plugin Name: Courses Custom Post Type
  * Plugin URI:
  * Description: A plugin to create a custom post type for students.
- * Version: 0.2.0
+ * Version: 0.3.0
  * Text Domain: jyg-students
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
+
+// Define plugin constants
+define( 'MY_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'MY_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
+// Include required files
+require_once MY_PLUGIN_DIR . 'includes/post-types.php';
 
 /**
  * Let's create a custom post type for courses and a custom taxonomy for the subject.
@@ -45,36 +52,7 @@ function enqueue_leaflet_js_and_css() {
     wp_enqueue_script('leaflet-js', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', [], null, true);
 }
 
-/**
- * Register the course custom post type.
- * show_in_rest is set to true to enable the Gutenberg editor for the custom post type.
- * supports custom-fields to enable custom fields in the Gutenberg editor.
- * rewrite is set to 'courses' to change the URL of the custom post type.
- * public is set to true to access the courses content from the front end.
- */
-add_action('init', 'course_post_type');
-function course_post_type() {
-    register_post_type('course',
-        array(
-            'labels'      => array(
-                'name'          => __('Courses', 'jyg-students'),
-                'singular_name' => __('Course', 'jyg-students'),
-                'add_new'       => __('Add New Course', 'jyg-students'),
-                'add_new_item'       => __('Add New Course', 'jyg-students'),
-                'new_item'       => __('New Course', 'jyg-students'),
-                'edit_item'       => __('Edit Course', 'jyg-students'),
-                'view_item'       => __('View Course', 'jyg-students'),
-                'all_items'       => __('All Courses', 'jyg-students'),
-            ),
-            'public'      => true,
-            'has_archive' => true,
-            'show_in_rest' => true,
-            'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields' ),
-            'rewrite'     => array( 'slug' => 'courses' ),
 
-        )
-    );
-}
 
 /**
  * Register the subject taxonomy for the course custom post type.
@@ -163,38 +141,6 @@ function save_course_subscribe_form_data() {
    wp_safe_redirect( esc_url( $_SERVER['REQUEST_URI'] ) );
 }
 
-/**
- * Create a custom post type for subscribers.
- * show_in_rest is set to true to enable the Gutenberg editor for the custom post type.
- * supports custom-fields to enable custom fields in the Gutenberg editor.
- * rewrite is set to 'subscribers' to change the URL of the custom post type.
- * public is set to true to access the subscribers content from the front end.
- */
-
-add_action('init', 'subscribers_cpt');
-// Create a custom post type for subscribers.
-function subscribers_cpt(){
-    register_post_type('subscriber',
-        array(
-            'labels'      => array(
-                'name'          => __('Subscribers', 'jyg-students'),
-                'singular_name' => __('Subscriber', 'jyg-students'),
-                'add_new'       => __('Add New Subscriber', 'jyg-students'),
-                'add_new_item'       => __('Add New Subscriber', 'jyg-students'),
-                'new_item'       => __('New Subscriber', 'jyg-students'),
-                'edit_item'       => __('Edit Subscriber', 'jyg-students'),
-                'view_item'       => __('View Subscriber', 'jyg-students'),
-                'all_items'       => __('All Subscribers', 'jyg-students'),
-            ),
-            'public'      => true,
-            'has_archive' => true,
-            'show_in_rest' => true,
-            'supports' => array( 'title', 'custom-fields' ),
-            'rewrite'     => array( 'slug' => 'subscribers' ),
-
-        )
-    );
-}
 
 /**
  * Show the subscriber entries per course in the admin column.
@@ -297,35 +243,7 @@ function save_student_form_data() {
     wp_safe_redirect( esc_url( $_SERVER['REQUEST_URI'] ) );
 }
 
-/**
- * * Register the student custom post type.
- * show_in_rest is set to true to enable the Gutenberg editor for the custom post type.
- * supports custom-fields to enable custom fields in the Gutenberg editor.
- * rewrite is set to 'students' to change the URL of the custom post type.
- * public is set to true to access the students content from the front end.
- */
-add_action('init', 'student_cpt');
-function student_cpt() {
-    register_post_type('student',
-        array(
-            'labels'      => array(
-                'name'          => __('Students', 'jyg-students'),
-                'singular_name' => __('Student', 'jyg-students'),
-                'add_new'       => __('Add New Student', 'jyg-students'),
-                'add_new_item'       => __('Add New Student', 'jyg-students'),
-                'new_item'       => __('New Student', 'jyg-students'),
-                'edit_item'       => __('Edit Student', 'jyg-students'),
-                'view_item'       => __('View Student', 'jyg-students'),
-                'all_items'       => __('All Students', 'jyg-students'),
-            ),
-            'public'      => true,
-            'has_archive' => true,
-            'show_in_rest' => true,
-            'supports' => array( 'title', 'custom-fields' ),
-            'rewrite'     => array( 'slug' => 'students' ),
-        )
-    );
-}
+
 
 /**
  * * Show the student fields in the frontend in each student post.
