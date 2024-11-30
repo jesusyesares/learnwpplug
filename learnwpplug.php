@@ -45,12 +45,7 @@ require_once MY_PLUGIN_DIR . 'includes/post-types.php';
  *       course_subscribe_column
  */
 
-// Enqueuing Leaflet JS and CSS
-add_action( 'wp_enqueue_scripts', 'enqueue_leaflet_js_and_css' );
-function enqueue_leaflet_js_and_css() {
-    wp_enqueue_style('leaflet-css', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css');
-    wp_enqueue_script('leaflet-js', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', [], null, true);
-}
+
 
 
 
