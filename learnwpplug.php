@@ -3,7 +3,9 @@
  * Plugin Name: Courses Custom Post Type
  * Plugin URI:
  * Description: A plugin to create a custom post type for students.
- * Version: 0.3.0
+ * Version: 0.3.1
+ * Author: Jesús Yesares
+ * Author URI: https://jesusyesares.com
  * Text Domain: jyg-students
  */
 
