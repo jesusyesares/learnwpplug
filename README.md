@@ -50,14 +50,6 @@ This plugin is licensed under the GPL-2.0-or-later license.
 
 Created by **Jesús Yesares** as part of the Learn WordPress Course.
 
----
-
-## Screenshots
-
-1. **Admin Panel:** Manage students and input their details.  
-2. **Map View:** Visualize the city location of each student using Leaflet.
-
----
 
 ## Contributing
 
