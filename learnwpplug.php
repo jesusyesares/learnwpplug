@@ -16,7 +16,6 @@ define( 'MY_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'MY_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 // Include required files
-require_once MY_PLUGIN_DIR . 'includes/taxonomies.php';
 require_once MY_PLUGIN_DIR . 'includes/shortcodes.php';
 require_once MY_PLUGIN_DIR . 'includes/form-handlers.php';
 require_once MY_PLUGIN_DIR . 'includes/enqueue-scripts.php';
