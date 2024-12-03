@@ -23,30 +23,9 @@ require_once MY_PLUGIN_DIR . 'includes/admin.php';
 require_once MY_PLUGIN_DIR . 'includes/frontend.php';
 
 /**
- * Let's create a custom post type for courses and a custom taxonomy for the subject.
- * We will also create a subscribe form on the single course page to allow users to subscribe to the course.
- * The form data will be saved as a custom post type for subscribers.
- * We will display the number of subscribers per course in the admin column.
- *
- *
- * Here are the WordPress action and filter hooks used in this example:
- *
- * ### Action Hooks
- * - init
- * callbacks:
- *      course_post_type
- *      course_taxonomy
- *      save_course_subscribe_form_data
- *      subscribers_cpt
- *      manage_course_posts_custom_column
- *      course_subscribe_column_content
- *      manage_course_posts_columns
- *      course_subscribe_column
- *
- * ### Filter Hooks
- * - manage_course_posts_columns
- * callback:
- *       course_subscribe_column
+ * Let's create a custom post type for students.
+ * The form data will be saved in the students custom post type.
+ * There's will be a Leaflet map showing the location of the student's city.
  */
 
 /**
