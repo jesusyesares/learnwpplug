@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Courses Custom Post Type
+ * Plugin Name: LearnWPPlug
  * Plugin URI:
  * Description: A plugin to create a custom post type for students.
  * Version: 0.3.1
